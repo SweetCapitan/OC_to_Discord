@@ -1,8 +1,7 @@
 from flask import Flask
 import requests
 import os
-from flask_restful import Api, Resource
-
+from flask_restful import Api, Resource, reqparse
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,7 +14,10 @@ class Webhook(Resource):
 
     def post(self, text):
         data = dict()
-        data['username'] = 'Minecraft-to-Discord'
+        parser = reqparse.RequestParser()
+        parser.add_argument('author')
+        params = parser.parse_args()
+        data['username'] = params['author']
         data['content'] = text
         req = requests.post(url, data=data)
         return 201
