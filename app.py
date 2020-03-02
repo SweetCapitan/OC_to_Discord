@@ -19,7 +19,7 @@ class Webhook(Resource):
         parser.add_argument('text')
         params = parser.parse_args()
         data['username'] = params['author']
-        data['content'] = params['author']
+        data['content'] = params['text']
         req = requests.post(url, data=data)
         return 201
 
