@@ -12,13 +12,14 @@ class Webhook(Resource):
     def get(self):
         pass
 
-    def post(self, text):
+    def post(self):
         data = dict()
         parser = reqparse.RequestParser()
         parser.add_argument('author')
+        parser.add_argument('text')
         params = parser.parse_args()
         data['username'] = params['author']
-        data['content'] = text
+        data['content'] = params['author']
         req = requests.post(url, data=data)
         return 201
 
@@ -29,7 +30,6 @@ class Webhook(Resource):
         pass
 
 
-
-api.add_resource(Webhook, "/webhook", "/webhook/", "/webhook/<text>")
+api.add_resource(Webhook, "/webhook")
 if __name__ == '__main__':
     app.run(debug=True)
