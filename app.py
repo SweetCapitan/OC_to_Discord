@@ -6,11 +6,16 @@ from flask_restful import Api, Resource, reqparse
 app = Flask(__name__)
 api = Api(app)
 url = os.environ.get('URL')
+message = {}
 
 
 class Webhook(Resource):
+
     def get(self):
-        pass
+        if message is None:
+            return 204
+        else:
+            return message[0]
 
     def post(self):
         data = dict()
@@ -24,7 +29,11 @@ class Webhook(Resource):
         return 201
 
     def put(self):
-        pass
+        parser = reqparse.RequestParser()
+        parser.add_argument('message')
+        params = parser.parse_args()
+        message[0] = params['message']
+        return 201
 
     def delete(self):
         pass
