@@ -13,7 +13,7 @@ class Webhook(Resource):
 
     def get(self):
         if message['message'] is None:
-            return 204
+            return 404 + "Not Found"
         else:
             return message['author'], message['message']
 
@@ -38,8 +38,8 @@ class Webhook(Resource):
         return 201
 
     def delete(self):
-        pass
-
+        message = {'message': None, 'author': None}
+        return 201
 
 api.add_resource(Webhook, "/webhook")
 if __name__ == '__main__':
